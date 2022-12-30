@@ -1,0 +1,23 @@
+{
+  "name": "midas",
+  "version": "1.0.0",
+  "description": "Playground for ideas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anishmitta1/midas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anishmitta1/midas/issues"
+  },
+  "homepage": "https://github.com/anishmitta1/midas#readme",
+  "dependencies": {
+    "axios": "^1.2.2"
+  }
+}
