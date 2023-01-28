@@ -4,7 +4,7 @@
   "description": "Playground for ideas",
   "main": "app.ts",
   "scripts": {
-    "dev": "nodemon ./app.ts"
+    "dev": "nodemon ./src/app.ts"
   },
   "repository": {
     "type": "git",
