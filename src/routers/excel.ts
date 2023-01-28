@@ -4,7 +4,7 @@ import { readFile } from 'xlsx';
 import { PayloadKeys } from '../constants';
 
 import type { File } from 'formidable';
-import type { IWorksheet, IWorkbook } from './excel.types';
+import type { IWorkbook, IWorksheet } from '@/types';
 
 const router = express.Router();
 

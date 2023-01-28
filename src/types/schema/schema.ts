@@ -24,4 +24,4 @@ interface IValidation {
 
 type ISchema = IValidation[];
 
-export { ISchema };
+export type { ISchema, IValidation, ValidationConditionTypes };

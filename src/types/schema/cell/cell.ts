@@ -4,9 +4,14 @@ type ICellAddress = string;
 // x letters and then y numbers. Anything else is an invalid cell
 // address
 
-interface ICellGroup {
-  startCell: ICellAddress;
-  endCell: ICellAddress;
+interface ICell {
+  value: unknown;
+  address: ICellAddress;
 }
 
-export type { ICellAddress, ICellGroup };
+interface ICellGroup {
+  startCell: ICell;
+  endCell: ICell;
+}
+
+export type { ICellAddress, ICellGroup, ICell };

@@ -1,5 +1,7 @@
-enum PayloadKeys {
-  PAYLOAD_FILE = 'payloadFile',
+enum ValidationConditionTypes {
+  DATA_TYPE = 'data_type',
+  FORMATTING = 'formatting',
+  FORMULA = 'formula',
 }
 
-export { PayloadKeys };
+export { ValidationConditionTypes };
