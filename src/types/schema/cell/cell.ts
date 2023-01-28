@@ -1,3 +1,10 @@
+import type { CellObject } from 'xlsx';
+
+interface ICellRowCol {
+  row: string;
+  column: string;
+}
+
 type ICellAddress = string;
 // Cell address validations will be needed, a utility perhaps.
 // A valid cell address is defined by a string which contains
@@ -5,7 +12,7 @@ type ICellAddress = string;
 // address
 
 interface ICell {
-  value: unknown;
+  value: CellObject | null;
   address: ICellAddress;
 }
 
@@ -14,4 +21,4 @@ interface ICellGroup {
   endCell: ICell;
 }
 
-export type { ICellAddress, ICellGroup, ICell };
+export type { ICellAddress, ICellGroup, ICell, ICellRowCol };
