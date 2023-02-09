@@ -1,4 +1,5 @@
 import express from 'express';
+import { excelRouter } from './routers';
 
 import type { Express } from 'express';
 
@@ -14,6 +15,8 @@ app.use((req, res, next) => {
   });
   next();
 });
+
+app.use('/excel', excelRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!!');
