@@ -3,6 +3,8 @@ import formidable from 'formidable';
 import { readFile } from 'xlsx';
 import { IFile, IWorkbook, IWorksheet } from '@/types';
 import ExcelJS from 'exceljs';
+import pptxgen from 'pptxgenjs';
+import { readFileSync } from 'fs';
 
 const router = express.Router();
 
@@ -16,37 +18,53 @@ const getWorksheets = (workbook: IWorkbook): IWorksheet[] => {
   });
 };
 
-router.post('/report', (req, res) => {
-  const form = new formidable.IncomingForm();
+router.post('/report', async (req, res) => {
+  // const form = new formidable.IncomingForm();
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      res.status(500);
-    }
-    const _workbook = new ExcelJS.Workbook();
-    const workbook = await _workbook.xlsx.readFile(
-      (files['payloadFile'] as IFile).filepath
-    );
+  // form.parse(req, async (err, fields, files) => {
+  //   if (err) {
+  //     res.status(500);
+  //   }
+  //   const _workbook = new ExcelJS.Workbook();
+  //   const workbook = await _workbook.xlsx.readFile(
+  //     (files['payloadFile'] as IFile).filepath
+  //   );
 
-    // console.log(workbook.worksheets[0].columns[7].style);
-    // console.log(workbook.worksheets[0].columns[7].fill);
-    // console.log(workbook.worksheets[0].columns[7].values);
-    console.log(workbook.worksheets[0].getRow(1).getCell('H').style);
-    console.log(workbook.worksheets[0].getRow(1).getCell('H').value);
-    // const workbook = readFile((files['payloadFile'] as IFile).filepath, {
-    //   cellStyles: true,
-    //   cellHTML: true,
-    // });
-    // const [worksheet] = getWorksheets(workbook);
-    // console.log(worksheet.sheet.H1);
-    // worksheets.forEach((workSheet) => {
-    //   console.log(`Showing contents of ${workSheet.name}`);
-    //   console.log(workSheet.sheet.A4);
-    // });
-    return;
-  });
+  //   console.log(workbook.worksheets[0].getRow(1).getCell('H').style);
+  //   console.log(workbook.worksheets[0].getRow(1).getCell('H').value);
+  //   return;
+  // });
 
-  res.status(200);
+  let pptx = new pptxgen();
+
+  let slide = pptx.addSlide();
+
+  // slide.addText('hello');
+
+  // var slide = pptx.addSlide();
+  var opts = { x: 1.0, y: 1.0, fontSize: 42, color: '00FF00' };
+  slide.addText('Hello World!', opts);
+  const fileName = 'Browser-PowerPoint-Demo.pptx';
+
+  await pptx.writeFile({ fileName });
+  const file = readFileSync(
+    '/Users/anishsaimitta/Desktop/Personal/repos/midas/' + fileName,
+    'binary'
+  );
+
+  // res.writeHead(200, {
+  //   'Content-disposition': 'attachment;filename=' + fileName,
+  //   'Content-Length': data.length,
+  // });
+  // res.end(new Buffer(data, 'binary'));
+  // await pptx.writeFile({ fileName });
+
+  // const ab = await pptx.write({ outputType: '' });
+
+  // res.setHeader('Content-Length', file.length);
+  // res.write(file, 'binary');
+  // res.end();
+  res.sendFile('/Users/anishsaimitta/Desktop/Personal/repos/midas/' + fileName);
 });
 
 export default router;
