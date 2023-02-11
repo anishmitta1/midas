@@ -2,6 +2,7 @@ import express from 'express';
 import formidable from 'formidable';
 import { readFile } from 'xlsx';
 import { IFile, IWorkbook, IWorksheet } from '@/types';
+import ExcelJS from 'exceljs';
 
 const router = express.Router();
 
@@ -22,14 +23,30 @@ router.post('/report', (req, res) => {
     if (err) {
       res.status(500);
     }
-    const workbook = readFile((files['payloadFile'] as IFile).filepath);
-    const worksheets = getWorksheets(workbook);
-    worksheets.forEach((workSheet) => {
-      console.log(`Showing contents of ${workSheet.name}`);
-      console.log(workSheet.sheet);
-      res.status(200);
-    });
+    const _workbook = new ExcelJS.Workbook();
+    const workbook = await _workbook.xlsx.readFile(
+      (files['payloadFile'] as IFile).filepath
+    );
+
+    // console.log(workbook.worksheets[0].columns[7].style);
+    // console.log(workbook.worksheets[0].columns[7].fill);
+    // console.log(workbook.worksheets[0].columns[7].values);
+    console.log(workbook.worksheets[0].getRow(1).getCell('H').style);
+    console.log(workbook.worksheets[0].getRow(1).getCell('H').value);
+    // const workbook = readFile((files['payloadFile'] as IFile).filepath, {
+    //   cellStyles: true,
+    //   cellHTML: true,
+    // });
+    // const [worksheet] = getWorksheets(workbook);
+    // console.log(worksheet.sheet.H1);
+    // worksheets.forEach((workSheet) => {
+    //   console.log(`Showing contents of ${workSheet.name}`);
+    //   console.log(workSheet.sheet.A4);
+    // });
+    return;
   });
+
+  res.status(200);
 });
 
 export default router;
