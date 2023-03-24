@@ -4,10 +4,10 @@
   "description": "Playground for ideas",
   "main": "index.js",
   "bin": {
-    "my-cli": "./bin/cli.js"
+    "my-cli": "./src/cli.ts"
   },
   "exports": {
-    ".": "./bin/cli.js"
+    ".": "./src/cli.ts"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
