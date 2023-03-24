@@ -1,6 +1,7 @@
 {
   "name": "midas",
   "version": "1.0.0",
+  "type": "module",
   "description": "Playground for ideas",
   "main": "index.js",
   "scripts": {
@@ -19,5 +20,11 @@
   "homepage": "https://github.com/anishmitta1/midas#readme",
   "dependencies": {
     "axios": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.6",
+    "commander": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
   }
 }
