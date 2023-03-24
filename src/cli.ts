@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import { Command } from 'commander';
-import { greetCommand, speakCommand } from './commands';
+import { greetCommand, speakCommand, commitPushCommand } from './commands';
 
 const program = new Command();
 
@@ -12,6 +12,7 @@ program
   )
   .version('1.0.0')
   .addCommand(greetCommand)
-  .addCommand(speakCommand);
+  .addCommand(speakCommand)
+  .addCommand(commitPushCommand);
 
 program.parse(process.argv);
