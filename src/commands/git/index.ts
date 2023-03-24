@@ -1,3 +1,4 @@
 import commitPushCommand from './commitPush';
+import fixLastCommand from './fixLast';
 
-export { commitPushCommand };
+export default { commitPushCommand, fixLastCommand };
