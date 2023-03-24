@@ -7,7 +7,7 @@ command.addArgument(new Argument('<message>')).action((message) => {
   exec(
     `git add -A && git commit -m "${message}" && git push`,
     (err, stdout, stderr) => {
-      if (err || stderr) {
+      if (err) {
         console.log(err);
         return;
       }
