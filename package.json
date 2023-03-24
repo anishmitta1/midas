@@ -2,7 +2,7 @@
   "name": "midas",
   "version": "1.0.0",
   "description": "Playground for ideas",
-  "main": "index.js",
+  "main": "src/cli.ts",
   "bin": {
     "my-cli": "./src/cli.ts"
   },
