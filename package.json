@@ -1,9 +1,14 @@
 {
   "name": "midas",
   "version": "1.0.0",
-  "type": "module",
   "description": "Playground for ideas",
   "main": "index.js",
+  "bin": {
+    "my-cli": "./bin/cli.js"
+  },
+  "exports": {
+    ".": "./bin/cli.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
