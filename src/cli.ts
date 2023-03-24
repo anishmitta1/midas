@@ -1,15 +1,17 @@
 #!/usr/bin/env ts-node
 
 import { Command } from 'commander';
-import { rootAction } from './controllers';
+import { greetCommand, speakCommand } from './commands';
 
 const program = new Command();
 
 program
+  .name('My CLI')
+  .description(
+    'A simple CLI designed to help with your day to day tasks and makes things quicker.'
+  )
   .version('1.0.0')
-  .description('A simple CLI')
-  .option('-n, --name <name>', 'Your name')
-  .option('-g, --greet [greeting]', 'Greeting', 'Hello')
-  .action(rootAction);
+  .addCommand(greetCommand)
+  .addCommand(speakCommand);
 
 program.parse(process.argv);
