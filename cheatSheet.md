@@ -1,5 +1,7 @@
 # Front End Cheat Sheet
 
+_Most of these snippets are in ES6 Javascript_
+
 ## Code Snippets
 
 ### Binary Search Implementation
@@ -163,3 +165,7 @@ class LinkedList {
   }
 }
 ```
+
+## JAMStack
+
+JAMStack is a web architecure which uses static served content to keep their web apps scalable and performant. It stands for Javascript, APIs and Markup. It consists generally of static site generator such as Gatsby and loads the dynamic data from a updating JSON or YAML file. These configs can also be configured using a user interface from a CMS such as contentful.
