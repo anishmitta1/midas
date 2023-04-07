@@ -1,4 +1,5 @@
 import express from 'express';
+import { imageRouter } from './routers';
 
 import type { Express } from 'express';
 
@@ -18,6 +19,8 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   res.send('Hello World!!');
 });
+
+app.use('/image', imageRouter);
 
 app.listen(PORT_NUMBER, () => {
   console.log(`Example app listening on port ${PORT_NUMBER}`);
