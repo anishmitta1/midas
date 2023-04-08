@@ -1,10 +1,11 @@
 import express from 'express';
-
+import multer from 'multer';
 const router = express.Router();
 
-router.post('/resolution', (req, res) => {
-  console.log({ req });
-  res.send('Improving your images resolution');
+router.post('/generate', multer().none(), (req, res) => {
+  const { prompt } = req.body;
+  console.log(prompt);
+  res.send('Improving your images resolutions');
 });
 
 export default router;

@@ -1,10 +1,21 @@
 import express from 'express';
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
+import multer from 'multer';
 import { imageRouter } from './routers';
 
 import type { Express } from 'express';
 
+dotenv.config();
+
 const app: Express = express();
-const PORT_NUMBER = 3000;
+const PORT_NUMBER = process.env.APP_PORT_NUMBER;
+
+const upload = multer();
+
+app.use(bodyParser.json());
+
+app.use(express.static('public'));
 
 app.use((req, res, next) => {
   const startTime = new Date().getTime();
