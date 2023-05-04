@@ -14,4 +14,6 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["ts-node", "./src/app.ts"]
+RUN npm run build
+
+CMD ["node", "./dist/app.js"]
