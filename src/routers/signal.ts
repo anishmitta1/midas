@@ -29,7 +29,7 @@ const sellSymbol = (symbol?: string) => {
   return;
 };
 
-router.post('/tradingView', (req: ISignalRequest, res) => {
+router.post('/', (req: ISignalRequest, res) => {
   const { signal, symbol } = req.body;
 
   switch (signal) {
