@@ -1,4 +1,7 @@
-Playground for ideas
+Use the below command to build an image:
 
-For future reference: tutorial on how to use multiple git accounts:
-https://www.youtube.com/watch?v=lLgWWtOk7gk&t=286s
+`gcloud run deploy --image gcr.io/<project-id>/<service-name>`
+
+Use the below command to deploy:
+
+`gcloud run deploy --image gcr.io/<project-id>/<service-name> --set-env-vars TELEGRAM_BOT_API_KEY="",RECIPIENT_CHAT_ID="",TELEGRAM_API_BASE_URL=""`
