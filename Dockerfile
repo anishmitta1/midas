@@ -8,11 +8,12 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
+RUN npm install @babel/cli -g
 RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8080
 
 RUN npm run build
 

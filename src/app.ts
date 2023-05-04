@@ -7,7 +7,7 @@ import type { Express } from 'express';
 
 dotenv.config();
 const app: Express = express();
-const PORT_NUMBER = 3000;
+const PORT_NUMBER = 8080;
 
 app.use(bodyParser.json());
 
