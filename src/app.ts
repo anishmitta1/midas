@@ -1,9 +1,11 @@
 import express from 'express';
-import { signalRouter } from './routers';
 import bodyParser from 'body-parser';
+import * as dotenv from 'dotenv';
+import { signalRouter } from './routers';
 
 import type { Express } from 'express';
 
+dotenv.config();
 const app: Express = express();
 const PORT_NUMBER = 3000;
 
@@ -19,8 +21,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.send('Hello World!!');
+});
+
+app.get('/healthcheck', (_, res) => {
+  res.sendStatus(200);
 });
 
 app.use('/signal', signalRouter);

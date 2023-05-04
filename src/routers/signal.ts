@@ -12,15 +12,20 @@ const buySymbol = async (symbol?: string) => {
     return;
   }
 
-  console.log(`Attempting to buy ${symbol}`);
-  messaging.sendMessage(Signals.BUY, '');
+  messaging.sendMessage(Signals.BUY, symbol);
 };
 
 const sellSymbol = (symbol?: string) => {
+  if (!symbol) {
+    console.log('Invalid input provided');
+    return;
+  }
+
   /**
    * We'll figure out the selling strategy later, after
    * experimenting with a simple moving stop loss strategy
    */
+  messaging.sendMessage(Signals.SELL, symbol);
   return;
 };
 
@@ -35,10 +40,10 @@ router.post('/tradingView', (req: ISignalRequest, res) => {
       sellSymbol(symbol);
       break;
     default:
-      res.send(500);
+      res.sendStatus(500);
   }
 
-  res.send(200);
+  res.sendStatus(200);
 });
 
 export default router;
