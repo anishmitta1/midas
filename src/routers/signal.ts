@@ -1,5 +1,6 @@
 import express from 'express';
 import { Signals } from '../constants';
+import { messaging } from '../controllers';
 
 import type { ISignalRequest } from '@/types/signal';
 
@@ -12,6 +13,7 @@ const buySymbol = async (symbol?: string) => {
   }
 
   console.log(`Attempting to buy ${symbol}`);
+  messaging.sendMessage(Signals.BUY, '');
 };
 
 const sellSymbol = (symbol?: string) => {
