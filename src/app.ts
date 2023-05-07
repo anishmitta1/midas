@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import * as dotenv from 'dotenv';
 import { signalRouter } from './routers';
 import { logger } from './instrumentation';
+import { startJobs } from './scheduler';
 
 import type { Express } from 'express';
 
@@ -34,4 +35,5 @@ app.use('/signal', signalRouter);
 
 app.listen(PORT_NUMBER, () => {
   logger.log(`Example app listening on port ${PORT_NUMBER}`);
+  startJobs();
 });
