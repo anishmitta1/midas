@@ -1,5 +1,6 @@
-import { STOP_LOSS_THRESHOLD } from '../constants/StopLoss';
 import axios from 'axios';
+import { STOP_LOSS_THRESHOLD } from '../constants';
+
 import type { IHolding } from '../types/holding';
 
 /**
@@ -9,17 +10,29 @@ import type { IHolding } from '../types/holding';
  * @returns
  */
 const toMidasHolding = (position: any): IHolding => {
+  const { symbol, qty: quantity, qty_available: quantityAvailable } = position;
+
+  const buyPrice = Number(position.avg_entry_price);
+  const lastTradedPrice = Number(position.market_value) / quantity;
+
+  const stopLoss = STOP_LOSS_THRESHOLD * buyPrice;
+  const currentStopLoss = Math.max(
+    STOP_LOSS_THRESHOLD * lastTradedPrice,
+    stopLoss
+  );
+
   return {
-    symbol: position.symbol,
+    symbol,
     stopLoss: {
-      buyPrice: Number(position.avg_entry_price),
-      lastTradedPrice: Number(position.market_value),
-      stopLoss: STOP_LOSS_THRESHOLD * position.avg_entry_price,
-      currentStopLoss: Math.max(
-        STOP_LOSS_THRESHOLD * position.market_value,
-        STOP_LOSS_THRESHOLD * position.avg_entry_price
-      ),
+      buyPrice,
+      lastTradedPrice,
+      stopLoss,
+      currentStopLoss,
     },
+    quantity,
+    quantityAvailable,
+    buyPrice,
+    lastTradedPrice,
   };
 };
 

@@ -1,16 +1,43 @@
 import { logger } from '../instrumentation';
 import { db } from '../firebase';
-import { portfolioService } from '../services';
+import { portfolioService, stopLossService } from '../services';
 
 import type { IHolding } from '../types/holding';
 
-const updateHoldingsInFirestore = async (holdings: IHolding[]) => {
+const updateHoldingsInFirestore = async (updatedHoldings: IHolding[]) => {
   const alpacaHoldingsRef = db.collection('holdings').doc('alpacaHoldings');
-  const holdingsObject: any = {};
-  holdings.forEach((holding) => {
-    holdingsObject[holding.symbol] = holding;
+  const currentFirestoreHoldings = (await alpacaHoldingsRef.get()).data();
+
+  if (!currentFirestoreHoldings) {
+    throw new Error('Got an empty firestore document');
+  }
+
+  const updatedHoldingsObject: any = {};
+
+  updatedHoldings.forEach((updatedHolding) => {
+    const currentHolding = currentFirestoreHoldings[updatedHolding.symbol];
+
+    if (!currentHolding) {
+      updatedHoldingsObject[updatedHolding.symbol] = {
+        ...updatedHolding,
+        lastUpdatedAt: new Date().toUTCString(),
+      };
+      return;
+    }
+
+    const newStopLoss = stopLossService.transformStopLoss(
+      currentHolding.stopLoss,
+      updatedHolding.lastTradedPrice
+    );
+
+    updatedHoldingsObject[updatedHolding.symbol] = {
+      ...updatedHolding,
+      stopLoss: newStopLoss,
+      lastUpdatedAt: new Date().toUTCString(),
+    };
   });
-  alpacaHoldingsRef.update(holdingsObject);
+
+  alpacaHoldingsRef.update(updatedHoldingsObject);
 };
 
 const syncPortfolio = async () => {
