@@ -15,7 +15,7 @@ const updateStopLosses = async () => {
 
   const updatedFirestoreHoldings: any = {};
 
-  Object.keys(currentFirestoreHoldings).forEach((key) => {
+  Object.keys(alpacaHoldingPrices).forEach((key) => {
     const currentHolding = currentFirestoreHoldings[key];
     const { stopLoss } = currentHolding;
     const currentPrice = alpacaHoldingPrices[key];
