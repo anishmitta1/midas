@@ -1,6 +1,6 @@
 Use the below command to build an image:
 
-`gcloud run deploy --image gcr.io/<project-id>/<service-name>`
+`gcloud builds submit --tag gcr.io/<project-id>/<service-name> .`
 
 Use the below command to deploy:
 
