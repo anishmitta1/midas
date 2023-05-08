@@ -1,0 +1,3 @@
+const STOP_LOSS_THRESHOLD = 0.98;
+
+export { STOP_LOSS_THRESHOLD };

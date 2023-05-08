@@ -1,8 +1,7 @@
 import { portfolioService } from '../services';
 import { IStopLossEntity } from '../types/holding';
 import { logger } from '../instrumentation';
-
-const STOP_LOSS_THRESHOLD = 0.98;
+import { STOP_LOSS_THRESHOLD } from '../constants/StopLoss';
 
 const calculateStopLoss = (price: number): number =>
   Math.floor(STOP_LOSS_THRESHOLD * price);
