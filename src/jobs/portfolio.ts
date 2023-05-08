@@ -1,6 +1,7 @@
-import { logger } from '../instrumentation';
 import axios from 'axios';
+import { logger } from '../instrumentation';
 import { STOP_LOSS_THRESHOLD } from '../constants/StopLoss';
+import { db } from '../firebase';
 
 import type { IHolding } from '../types/holding';
 
@@ -47,7 +48,12 @@ const getAlpacaHoldings = async (): Promise<IHolding[]> => {
 };
 
 const updateHoldingsInFirestore = async (holdings: IHolding[]) => {
-  console.log(holdings);
+  const alpacaHoldingsRef = db.collection('holdings').doc('alpacaHoldings');
+  const holdingsObject: any = {};
+  holdings.forEach((holding) => {
+    holdingsObject[holding.symbol] = holding;
+  });
+  alpacaHoldingsRef.update(holdingsObject);
 };
 
 const syncPortfolio = async () => {
