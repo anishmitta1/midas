@@ -1,3 +1,4 @@
+import { db } from '../firebase';
 import axios from 'axios';
 import { STOP_LOSS_THRESHOLD } from '../constants';
 
@@ -61,8 +62,19 @@ const getAllHoldings = async (): Promise<IHolding[]> => {
   return alpacaHoldings;
 };
 
-const syncPortfolio = async () => {
-  //
+const getHoldingPrices = async () => {
+  const holdings = await getAllHoldings();
+  const pricingMap: any = {};
+  holdings.forEach((holding) => {
+    pricingMap[holding.symbol] = holding.lastTradedPrice;
+  });
+  return pricingMap;
 };
 
-export { getAllHoldings, syncPortfolio };
+const getFirestoreHoldings = async () => {
+  const alpacaHoldingsRef = db.collection('holdings').doc('alpacaHoldings');
+  const currentFirestoreHoldings = (await alpacaHoldingsRef.get()).data();
+  return currentFirestoreHoldings as { [key: string]: IHolding };
+};
+
+export { getAllHoldings, getFirestoreHoldings, getHoldingPrices };

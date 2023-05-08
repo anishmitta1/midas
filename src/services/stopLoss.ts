@@ -18,7 +18,11 @@ const transformStopLoss = (
 ): IStopLossEntity => {
   const { currentStopLoss } = stopLoss;
   const newStopLoss = Math.max(calculateStopLoss(latestPrice), currentStopLoss);
-  return { ...stopLoss, currentStopLoss: newStopLoss };
+  return {
+    ...stopLoss,
+    currentStopLoss: newStopLoss,
+    lastTradedPrice: latestPrice,
+  };
 };
 
 export { transformStopLoss };

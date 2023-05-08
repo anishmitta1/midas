@@ -4,7 +4,7 @@ import { portfolioJobs, stopLossJobs } from './jobs';
 
 const updateStopLossJob = schedule('* * * * *', stopLossJobs.updateStopLosses);
 
-const syncPortfolioJob = schedule('* * * * *', portfolioJobs.syncPortfolio);
+const syncPortfolioJob = schedule('0 * * * *', portfolioJobs.syncPortfolio);
 
 const allJobs = [updateStopLossJob, syncPortfolioJob];
 

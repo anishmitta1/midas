@@ -5,9 +5,8 @@ import { portfolioService, stopLossService } from '../services';
 import type { IHolding } from '../types/holding';
 
 const updateHoldingsInFirestore = async (updatedHoldings: IHolding[]) => {
-  const alpacaHoldingsRef = db.collection('holdings').doc('alpacaHoldings');
-  const currentFirestoreHoldings = (await alpacaHoldingsRef.get()).data();
-
+  const currentFirestoreHoldings =
+    await portfolioService.getFirestoreHoldings();
   if (!currentFirestoreHoldings) {
     throw new Error('Got an empty firestore document');
   }
@@ -37,6 +36,7 @@ const updateHoldingsInFirestore = async (updatedHoldings: IHolding[]) => {
     };
   });
 
+  const alpacaHoldingsRef = db.collection('holdings').doc('alpacaHoldings');
   alpacaHoldingsRef.update(updatedHoldingsObject);
 };
 

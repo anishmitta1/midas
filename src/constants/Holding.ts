@@ -7,4 +7,8 @@ enum Broker {
   ALPACA = 'ALPACA',
 }
 
-export { AlpacaAssetClass, Broker };
+const alpacaSymbolMapping: { [key: string]: string } = {
+  SOLUSD: 'SOL/USD',
+};
+
+export { AlpacaAssetClass, Broker, alpacaSymbolMapping };

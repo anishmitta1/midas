@@ -1,12 +1,39 @@
-import { portfolioService } from '../services';
-import { IStopLossEntity } from '../types/holding';
-import { logger } from '../instrumentation';
-import { STOP_LOSS_THRESHOLD } from '../constants';
+import { portfolioService, stopLossService } from '../services';
+import { db } from '../firebase';
+
+import type { IHolding } from '../types/holding';
 
 const updateStopLosses = async () => {
-  logger.log('Updating the stop loss...');
+  const currentFirestoreHoldings =
+    await portfolioService.getFirestoreHoldings();
 
-  const allHoldings = await portfolioService.getAllHoldings();
+  const alpacaHoldingPrices = await portfolioService.getHoldingPrices();
+
+  if (!currentFirestoreHoldings) {
+    return;
+  }
+
+  const updatedFirestoreHoldings: any = {};
+
+  Object.keys(currentFirestoreHoldings).forEach((key) => {
+    const currentHolding = currentFirestoreHoldings[key];
+    const { stopLoss } = currentHolding;
+    const currentPrice = alpacaHoldingPrices[key];
+    const newStopLoss = stopLossService.transformStopLoss(
+      stopLoss,
+      currentPrice
+    );
+
+    updatedFirestoreHoldings[key] = {
+      ...currentHolding,
+      stopLoss: newStopLoss,
+      lastUpdatedAt: new Date().toUTCString(),
+      lastTradedPrice: currentPrice,
+    } as IHolding;
+  });
+
+  const alpacaHoldingsRef = db.collection('holdings').doc('alpacaHoldings');
+  alpacaHoldingsRef.update(updatedFirestoreHoldings);
 };
 
 export { updateStopLosses };
