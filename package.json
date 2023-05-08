@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/anishmitta1/midas#readme",
   "dependencies": {
+    "@alpacahq/alpaca-trade-api": "3.0.1",
     "@babel/core": "7.21.8",
     "@babel/node": "7.20.7",
     "@babel/plugin-proposal-class-properties": "7.18.6",

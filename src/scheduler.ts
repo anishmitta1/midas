@@ -1,13 +1,12 @@
-import cron from 'node-cron';
+import { schedule } from 'node-cron';
 
-import { stopLossJobs } from './jobs';
+import { portfolioJobs, stopLossJobs } from './jobs';
 
-const updateStopLossCron = cron.schedule(
-  '* * * * *',
-  stopLossJobs.updateStopLoss
-);
+const updateStopLossJob = schedule('* * * * *', stopLossJobs.updateStopLosses);
 
-const allJobs = [updateStopLossCron];
+const syncPortfolioJob = schedule('0 * * * *', portfolioJobs.syncPortfolio);
+
+const allJobs = [updateStopLossJob, syncPortfolioJob];
 
 const startJobs = () => {
   allJobs.forEach((job) => {
@@ -15,4 +14,8 @@ const startJobs = () => {
   });
 };
 
-export { startJobs };
+const initialiseScheduler = () => {
+  startJobs();
+};
+
+export { initialiseScheduler };
