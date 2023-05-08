@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import * as dotenv from 'dotenv';
 import { signalRouter } from './routers';
+import { logger } from './instrumentation';
+import { initialiseScheduler } from './scheduler';
 
 import type { Express } from 'express';
 
@@ -16,7 +18,7 @@ app.use((req, res, next) => {
 
   res.on('finish', () => {
     const timeElapsed = new Date().getTime() - startTime;
-    console.log(`Request took ${timeElapsed} ms`);
+    logger.log(`Request took ${timeElapsed} ms`);
   });
   next();
 });
@@ -32,5 +34,6 @@ app.get('/healthcheck', (_, res) => {
 app.use('/signal', signalRouter);
 
 app.listen(PORT_NUMBER, () => {
-  console.log(`Example app listening on port ${PORT_NUMBER}`);
+  logger.log(`Example app listening on port ${PORT_NUMBER}`);
+  initialiseScheduler();
 });

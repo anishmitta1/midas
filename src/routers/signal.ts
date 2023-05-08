@@ -1,6 +1,7 @@
 import express from 'express';
 import { Signals } from '../constants';
 import { messaging } from '../controllers';
+import { logger } from '../instrumentation';
 
 import type { ISignalRequest } from '@/types/signal';
 
@@ -8,7 +9,7 @@ const router = express.Router();
 
 const buySymbol = async (symbol?: string) => {
   if (!symbol) {
-    console.log('Invalid input provided');
+    logger.warn('[signalRouter.buySymbol]: Invalid input provided');
     return;
   }
 
@@ -17,7 +18,7 @@ const buySymbol = async (symbol?: string) => {
 
 const sellSymbol = (symbol?: string) => {
   if (!symbol) {
-    console.log('Invalid input provided');
+    logger.warn('[signalRouter.sellSymbol]: Invalid input provided');
     return;
   }
 
@@ -31,16 +32,28 @@ const sellSymbol = (symbol?: string) => {
 
 router.post('/', (req: ISignalRequest, res) => {
   const { signal, symbol } = req.body;
-
-  switch (signal) {
-    case Signals.BUY:
-      buySymbol(symbol);
-      break;
-    case Signals.SELL:
-      sellSymbol(symbol);
-      break;
-    default:
-      res.sendStatus(500);
+  logger.log(
+    '[signalRouter/]: Signal recieved with payload : ',
+    JSON.stringify(req.body)
+  );
+  try {
+    switch (signal) {
+      case Signals.BUY:
+        buySymbol(symbol);
+        break;
+      case Signals.SELL:
+        sellSymbol(symbol);
+        break;
+      default:
+        throw new Error('Unknown signal');
+    }
+  } catch (error) {
+    logger.error(error);
+    logger.error(
+      '[signalRouter/]: Something went wrong handling signal with payload :',
+      JSON.stringify(req.body)
+    );
+    res.sendStatus(500);
   }
 
   res.sendStatus(200);
