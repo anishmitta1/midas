@@ -1,6 +1,6 @@
-import express from 'express';
+import express from "express";
 
-import type { Express } from 'express';
+import type { Express } from "express";
 
 const app: Express = express();
 const PORT_NUMBER = 3000;
@@ -8,15 +8,15 @@ const PORT_NUMBER = 3000;
 app.use((req, res, next) => {
   const startTime = new Date().getTime();
 
-  res.on('finish', () => {
+  res.on("finish", () => {
     const timeElapsed = new Date().getTime() - startTime;
     console.log(`Request took ${timeElapsed} ms`);
   });
   next();
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello World!!');
+app.get("/", (req, res) => {
+  res.send("Lets make some money");
 });
 
 app.listen(PORT_NUMBER, () => {
