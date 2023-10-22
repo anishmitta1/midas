@@ -1,7 +1,7 @@
 import express from "express";
 import "dotenv/config";
 
-import { accessTokenHandler } from "./handlers";
+import { getAccessToken } from "./controllers";
 
 import type { Express } from "express";
 
@@ -17,8 +17,6 @@ app.use((req, res, next) => {
   });
   next();
 });
-
-app.get("/accessToken", accessTokenHandler);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!");
