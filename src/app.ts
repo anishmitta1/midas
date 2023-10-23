@@ -1,7 +1,7 @@
 import express from "express";
 import "dotenv/config";
 
-import { getAccessToken } from "./controllers";
+import { getAccessToken, scrapeStocks } from "./controllers";
 
 import type { Express } from "express";
 
@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
+  scrapeStocks();
   res.send("Hello World!!");
 });
 

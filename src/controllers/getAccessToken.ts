@@ -3,7 +3,10 @@ import { authenticator } from "otplib";
 import crypto from "crypto";
 import axios from "axios";
 
+import { BASE_KITE_ENDPOINT } from "../constants";
+
 const kiteLoginUrl = `https://kite.zerodha.com/connect/login?v=3&api_key=${process.env.KITE_API_KEY}`;
+const kiteSessionEndpoint = `${BASE_KITE_ENDPOINT}/session/token`;
 
 const getRequestToken = (url: string) => {
   const urlParams = new URLSearchParams(new URL(url).search);
@@ -63,7 +66,6 @@ const getAccessToken = async () => {
     )
     .digest("hex");
 
-  const url = "https://api.kite.trade/session/token";
   const headers = {
     "X-Kite-Version": "3",
   };
@@ -74,7 +76,7 @@ const getAccessToken = async () => {
   data.append("request_token", requestToken);
   data.append("checksum", checksum);
 
-  const response = await axios.post(url, data, { headers });
+  const response = await axios.post(kiteSessionEndpoint, data, { headers });
 
   const accessToken = response.data.data.access_token;
 
